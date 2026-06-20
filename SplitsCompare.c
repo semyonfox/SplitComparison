@@ -12,10 +12,10 @@ int main() {
     int splitInterval;
     int minutes;
     float seconds;
-    char input[10];  // Array to store the user input (e.g., "1.20.33.68")
+    char input[20];  // Array to store the user input (e.g., "1.20.33")
     double splits1[60]; // Array to store split times (max 60 splits for 1500m with 25m splits)
     double splits2[60];
-    char originalTimes[2][60][10];
+    char originalTimes[2][60][20];
 
     // Introductory messages
     puts("-------- Comparing Splits ---------");
@@ -23,14 +23,14 @@ int main() {
 
     // Get event distance
     puts("\nEnter event distance (m): ");
-    if (scanf_s("%d", &distance) != 1) {
+    if (scanf("%d", &distance) != 1) {
         printf("Invalid input for distance.\n");
         return 1;
     }
 
     // Get split interval
     puts("\nEnter split interval (e.g., 50 for splits every 50m): ");
-    if (scanf_s("%d", &splitInterval) != 1 || splitInterval <= 0) {
+    if (scanf("%d", &splitInterval) != 1 || splitInterval <= 0) {
         printf("Invalid input for split interval.\n");
         return 1;
     }
@@ -46,17 +46,17 @@ int main() {
         printf("Please enter your time for split %d (mm.ss.ss): ", i + 1);
 
         // Read input time as a string
-        if (scanf_s("%19s", input, (unsigned)_countof(input)) != 1) {
+        if (scanf("%19s", input) != 1) {
             printf("Invalid input format.\n");
             continue; // Skip the invalid input and ask for the split again
         }
 
         // Parse the time string using sscanf
-        if (sscanf_s(input, "%d.%f",&minutes, &seconds) != 2) {
+        if (sscanf(input, "%d.%f", &minutes, &seconds) != 2) {
             printf("Invalid input format.\n");
             continue; // Skip the invalid input and ask for the split again
         }
-        strcpy_s(originalTimes[0][i], 10, input);
+        snprintf(originalTimes[0][i], sizeof originalTimes[0][i], "%s", input);
         // Calculate total time in seconds
         splits1[i] = convertToSeconds(minutes, seconds);
     }
@@ -69,18 +69,18 @@ int main() {
         printf("Please enter your time for split %d (mm.ss.ss): ", i + 1);
 
         // Read input time as a string
-        if (scanf_s("%19s", input, (unsigned)_countof(input)) != 1) {
+        if (scanf("%19s", input) != 1) {
             printf("Invalid input format.\n");
             continue; // Skip the invalid input and ask for the split again
         }
 
         // Parse the time string using sscanf
-        if (sscanf_s(input, "%d.%f", &minutes, &seconds) != 2) {
+        if (sscanf(input, "%d.%f", &minutes, &seconds) != 2) {
             printf("Invalid input format.\n");
             continue; // Skip the invalid input and ask for the split again
         }
 
-        strcpy_s(originalTimes[1][i], 10, input); // Copy input to Event 2 array
+        snprintf(originalTimes[1][i], sizeof originalTimes[1][i], "%s", input); // Copy input to Event 2 array
 
         // Calculate total time in seconds
         splits2[i] = convertToSeconds(minutes, seconds);
