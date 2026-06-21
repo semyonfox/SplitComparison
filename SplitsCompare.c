@@ -35,8 +35,22 @@ int main() {
         return 1;
     }
 
+    if (distance <= 0) {
+        printf("Invalid input for distance.\n");
+        return 1;
+    }
+
+    if (distance % splitInterval != 0) {
+        printf("Distance must be evenly divisible by the split interval.\n");
+        return 1;
+    }
+
     // Calculate number of splits
     int numSplits = (distance / splitInterval);
+    if (numSplits < 1 || numSplits > 60) {
+        printf("Number of splits must be between 1 and 60.\n");
+        return 1;
+    }
 
     //###---------event 1--------
     
